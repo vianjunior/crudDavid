@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import IconeIO from 'react-native-vector-icons/Ionicons'
+import {enviaUsuariosERP} from '../functions/sincronizacao'
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -25,6 +26,29 @@ export default class Header extends React.Component {
           <View>
             <Text style={estilo.estiloTextoHeader}>{this.props.titulo}</Text>
           </View>
+
+          <View style={{flexDirection:"row"}}>
+            {
+              this.props.mostraIconeSinc ?
+                <View>
+                  <TouchableOpacity style={{ padding: 10 }} onPress={()=> enviaUsuariosERP()}>                    
+                    <IconeIO name='md-sync' size={30} color="#fff" />
+                  </TouchableOpacity>
+                </View>
+                : null
+            }
+            {
+              this.props.mostraIconeAdd ?
+                <View>
+                  <TouchableOpacity style={{ padding: 10 }} onPress={this.props.abrirModal}>
+                    <IconeIO name='md-person-add' size={30} color="#fff" />
+                  </TouchableOpacity>
+                </View>
+                : null
+            }
+          </View>
+
+
         </View>
       </View>
     )

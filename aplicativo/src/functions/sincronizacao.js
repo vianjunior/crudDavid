@@ -2,6 +2,7 @@ import { Alert } from 'react-native'
 import axios from 'axios'
 import {insereDadosAdmAndroidAPP, buscaRegistrosAdmAndroid} from '../DAO/crudAdmAndroid'
 import {insereUsuario} from '../DAO/crudUsuarios'
+import {buscaRegistrosSinc, atualizaStatusUsuariosApp} from '../DAO/crudUsuariosApp'
 
 export function sincronizacao(){
   sincronizaAdmAndroid()
@@ -35,4 +36,23 @@ function sincronizaUsuarios(){
     .catch(err => {
       Alert.alert('Erro', 'Erro ao buscar usuários')
     })
+}
+
+export async function enviaUsuariosERP(){
+  let result = await buscaRegistrosSinc('')
+
+  if(result.length > 0) {
+    axios.post('http://10.1.1.154:14000/enviaUsuariosParaERP', {usuario:result})
+    
+    .then(resp =>{
+      if(resp.data != 'Erro ao inserir usuário'){
+        atualizaStatusUsuariosApp()
+        sincronizaUsuarios()
+      }else{
+        Alert.alert('Aviso', 'Falha ao sincronizar registros')
+      }
+    })
+  }else{
+    Alert.alert('Aviso!', 'Não existem registros para serem sincronizados')
+  }
 }

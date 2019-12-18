@@ -25,10 +25,13 @@ export function insereUsuario(data){
   })
 }
 
-export function buscaUsuario(){
+export function buscaUsuario(nomeUsuario){
   return new Promise(result => {
     db.transaction(tx => {
-      tx.executeSql(`SELECT * FROM usuarios`,[],(err, data) => {
+      tx.executeSql(`SELECT * FROM usuarios
+                    WHERE
+                      nmUsuario LIKE ?
+                    ORDER BY cdUsuario`,['%'+nomeUsuario+'%'],(err, data) => {
         if (data.rows.length > 0){
           result(data.rows._array)
         } else {

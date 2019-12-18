@@ -23,12 +23,12 @@ export function criaTabelaUsuarioAPP(){
       tx.executeSql(
           `
           CREATE TABLE IF NOT EXISTS usuariosAPP(
-              cdUsusarioApp TEXT,
-              nmUsuarioApp TEXT,
-              deLoginApp TEXT,
-              cdSenhaApp TEXT,
-              cnpjUsuarioApp TEXT,
-              statusUsuarioApp INTEGER
+              cdUsuario TEXT,
+              nmUsuario TEXT,
+              deLogin TEXT,
+              cdSenha TEXT,
+              cnpjUsuario TEXT,
+              statusUsuario INTEGER
           )`
       )
   })
